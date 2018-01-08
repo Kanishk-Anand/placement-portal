@@ -1,0 +1,197 @@
+<html>
+  <head>
+    <title> Placement Portal| Interview </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+ </head>
+ <body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">WebSiteName</a>
+      </div>
+   <ul class="nav navbar-nav">
+     <li><a href="#"><i class="fa fa-home"></i></a></li>
+     <li class="active"><a href="#">Companies</a></li>
+     <li><a href="#">Placed Students</a></li>
+   </ul>
+ </div>
+</nav>
+<div class="container-fluid" id="add_company_div">
+  <div class="row">
+    <div class="col-xs-offset-4 col-xs-3">
+      <a href="#" class="btn btn-sq-lg btn-primary active"> <i class="fa fa-plus fa-5x"></i><br> New Company <br> Interview </a>
+    </div>
+    <div class="col-xs-4">
+      <a href="#modify_company_div" class="btn btn-sq-lg btn-danger"> <i class="fa fa-bolt fa-5x"></i><br> Modify   <br> Interview<br> </a>
+    </div>
+  </div>
+
+  <div class="row">
+    <h1> Schedule Interview </h1>
+    <form class="form-horizontal" action="addcompany.jsp">
+    <div class="form-group" id="sourcediv">
+      <label class="control-label col-sm-2" for="company_name">Company Name:<span class="astericks">*</span></label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" id="company_name" placeholder="Enter Comany Name" name="company_name" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="date"> Date <span class="astericks">*</span></label>
+      <div class="col-sm-6">
+        <input type="date" class="form-control" id="date" placeholder="" name="date" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="company_time">Time <span class="astericks">*</span></label>
+      <div class="col-sm-6">
+        <input type="time" class="form-control" id="company_time" placeholder="" name="company_time">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2">Branches Eligible: </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" value="CSE" name="branch" checked>CSE
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" value="ECE" name="branch">ECE
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" value="EEE" name="branch">EEE
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" value="MECH" name="branch">MECH
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" value="CE" name="branch">CE
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" value="CIVIL" name="branch">CIVIL
+      </label>
+
+
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="gpa">Minimum GPA:</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" id="gpa" placeholder="Enter Minimum GPA" name="gpa">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="rounds">Number of Rounds:<span class="astericks">*</span></label>
+      <div class="col-sm-6">
+        <select class="form-control" id="rounds" name="rounds" onchange="createFields();">
+            <option value="0" >0</option>
+            <option value="1" >1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+      </div>
+    </div>
+    <div id="input_fields">
+
+    </div>
+
+
+
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </div>
+    </div>
+  </form>
+ 
+  
+</div>
+</div>
+
+
+<div class="container" id="modify_company_div">
+  
+  <div class="row">
+    <h1> Modify Interview </h1>
+   	<div class="form-group">
+      <label class="control-label col-sm-2" for="search_company">Enter Company Name:</label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" id="search_company" placeholder="Find company's interview here" name="company_name" onkeyup="showResult(this.value)">
+        
+      </div>
+    </div>
+   	<div id="search_result_div" class="col-sm-offset-2 col-sm-4"></div>
+    	
+	</div>
+</div>
+<script>
+    function createFields(){
+      var fielddiv= document.getElementById('input_fields');
+      var optionfield=document.getElementById('rounds');
+      var num=optionfield.options[optionfield.selectedIndex].value;
+      fielddiv.style.display="none";
+      while (fielddiv.firstChild) {
+
+        fielddiv.removeChild(fielddiv.firstChild);
+
+      }
+      var txt='';
+      for(var i=0;i<num;i++){
+
+        var sourcediv=document.getElementById('sourcediv');
+        var clonediv=sourcediv.cloneNode(true);
+        clonediv.id='';
+        var cnode=clonediv.childNodes;
+        for(j=0;j<cnode.length;j++){
+          txt="Round "+(i+1);
+          cnode[1].innerHTML=txt;
+          cnode[1].setAttribute('for',txt)
+          var nestdiv=cnode[3];
+          var newinput=nestdiv.childNodes;
+          newinput[1].placeholder="Round Name / Description";
+          newinput[1].value='';
+          newinput[1].id=txt;
+          newinput[1].setAttribute('name',txt);
+        }
+        fielddiv.appendChild(clonediv);
+      }
+      fielddiv.style.display="block";
+	}
+    
+    function showResult(compname){
+    	var req=new XMLHttpRequest();
+  		req.onreadystatechange=function(){
+  			if(req.readyState==4 && req.status==200){
+  				//alert(req.responseText);
+  					
+  			}
+  			
+  		}
+  		req.open("GET","searchCompany.jsp?compname="+compname,true);
+  		req.send();
+    }
+    
+    function displayCompanyInfo(compname){
+    	var req=new XMLHttpRequest();
+  		req.onreadystatechange=function(){
+  			if(req.readyState==4 && req.status==200){
+  				//alert(req.responseText);
+  				document.getElementById("search_result_div").innerHTML=req.responseText+"<br>";
+  					
+  			}
+  			
+  		}
+  		req.open("GET","searchCompany.jsp?displaycompany="+compname,true);
+  		req.send();
+    }
+    
+    
+    
+  </script>
+
+</body>
+</html>
