@@ -1,0 +1,30 @@
+#table_container{
+	text-align:center;
+ 	padding:20px;
+  	
+}	
+th{
+	color: #4eba8d;
+	font-size: 20px;
+}
+tr{
+	color:#e2e2e2;
+}
+.btn-success{
+	background-color: #ba574e;
+	border:1px solid #94453e;
+	
+}
+.btn-success:hover{
+	background-color: #4eb1ba;
+	border: 1px solid #367b82;
+}
+#date_format{
+	font-size: 12px;
+	bottom: 20px;
+	
+}
+
+thead,tr{
+	text-align:center;
+}

@@ -1,0 +1,376 @@
+<html>
+  <head>
+    <title> Placement Portal| Interview </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css">
+    
+    <link rel="stylesheet" href="css/interview.css">
+</head>
+ <body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="interview.html" id="webname">Be~Placed</a>
+      </div>
+   <ul class="nav navbar-nav navbar-right">
+     <li><a href="interview.html"><i class="fa fa-home" style="font-size:22px"></i></a></li>
+     <li class="active"><a href="interview.html" style="background-color:#4eb1ba;border-radius:5px">Companies</a></li>
+     <li><a href="student_status.jsp">Placement Status</a></li>
+     <li><a href="logout.jsp"><i class="octicon octicon-sign-out" style="font-size:22px"></i></a></li>	
+   </ul>
+ </div>
+</nav>
+
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Message:</h4>
+        </div>
+        <div class="modal-body">
+          <p id="modal_text"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+ </div>
+ 
+ 
+ <div class="modal fade" id="count_modal" role="dialog">
+    <div class="modal-dialog">
+
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Message:</h4>
+        </div>
+        <div class="modal-body">
+          <p id="count_modal_text"></p>
+        </div>
+        <div class="modal-footer">
+        		<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="updateInterview()">Modify</button>
+        </div>
+      </div>
+
+    </div>
+ </div>
+ 
+ 
+ 
+ 
+ 
+ <div class="container" id="modify_company_div">
+
+  <div class="row">
+  <div class="btn-group btn-group-justified">
+  		<a href="interview.html" class="btn btn-success">Add Interview</a>
+  		<a href="modify_interview.html" class="btn btn-primary active">Modify Interview</a>
+  		<a href="delete_interview.jsp" class="btn btn-danger">Delete Interview</a>
+  		<a href="interview_report.jsp" class="btn btn-warning">View Report</a>
+	</div> 
+    <h1 class="heading"> Modify Interview </h1>
+   	<div class="form-group">
+      <label class="control-label col-sm-3" for="search_company">Enter Company Name </label>
+      <div class="col-sm-6 text-left">
+        <input type="text" class="form-control" id="search_company" placeholder="Find company's interview here" name="company_name" onkeyup="showResult(this.value)">
+
+      </div>
+    </div>
+   	<div id="search_div" class="col-sm-offset-3 col-sm-6" >
+   		<div id="search_result_div" style="display:none"></div>	
+   	
+   	</div>
+
+	</div>
+  <br><br>
+  
+  	<form class="form-horizontal" action="update_interview.jsp?update=1" id="company_form" method="post" style="display:none">
+  	<h3 class="heading">Edit the details:</h3>
+    <div class="form-group" id="sourcediv">
+      <label class="control-label col-sm-3" for="company_name">Company Name <span class="astericks">*</span></label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" id="company_name" placeholder="Enter Comany Name" name="company_name" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3" for="date"> Date <span class="astericks">*</span></label>
+      <div class="col-sm-6">
+        <input type="date" class="form-control" id="date" placeholder="" name="date" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3" for="company_time">Time <span class="astericks">*</span></label>
+      <div class="col-sm-6">
+        <input type="time" class="form-control" id="company_time" placeholder="" name="company_time">
+      </div>
+    </div>
+    <div class="form-group" id="branch">
+      <label class="control-label col-sm-3">Branches Eligible </label>
+      <div class="col-sm-5 text-left">
+      <label class="checkbox-inline">
+        <input type="checkbox" value="CSE" name="branch" checked>CSE
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" value="ECE" name="branch">ECE
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" value="EEE" name="branch">EEE
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" value="MECH" name="branch">MECH
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" value="CE" name="branch">CE
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" value="CIVIL" name="branch">CIVIL
+      </label>
+    </div>
+
+
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3" for="gpa">Minimum GPA </label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" id="gpa" placeholder="Enter Minimum GPA" name="gpa">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3" for="rounds">Number of Rounds <span class="astericks">*</span></label>
+      <div class="col-sm-6">
+        <select class="form-control" id="rounds" name="rounds" onchange="createFields();">
+            <option value="0" >0</option>
+            <option value="1" >1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+      </div>
+    </div>
+    <input type="hidden" id="comp_id" name="comp_id">
+    <input type="hidden" id="stu_id" name="stu_id">
+    <div id="input_fields">
+
+    </div>
+	<div class="form-group">
+       <label class="control-label col-sm-3" for="description">Description</label>
+       <div class="col-sm-6">
+           <textarea class="form-control" rows="8" id="description" name="description"></textarea>
+                  
+      	</div>
+      </div>
+
+
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-5">
+        <button type="button" class="btn btn-default" onclick="validateData()">Submit</button>
+      </div>
+    </div>
+  </form>
+  	
+  
+</div>
+
+
+<script src="js/handle.js"></script>
+<script>
+
+var urlstr=window.location.href;
+var url=new URL(urlstr);
+var success=url.searchParams.get("success");
+
+if(success==1){
+	displayModal("Successfully Updated");
+}
+else if(success==0){
+	displayModal("Error while updating. Please try again later");
+}
+else{}
+
+function showResult(compname){
+	var req=new XMLHttpRequest();
+		req.onreadystatechange=function(){
+			if(req.readyState==4 && req.status==200){
+				var search_result=document.getElementById("search_result_div");
+				var res=req.responseText;
+					//alert(res);
+					if(res.indexOf("404")!=-1){
+						search_result.style.display="block";
+						document.getElementById("company_form").style.display="none";
+						search_result.innerHTML="No company's interview found";
+						
+						
+					}
+					else{
+						search_result.style.display="block";
+	  					search_result.innerHTML=res;
+					}
+
+			}
+
+		}
+		if(compname!=""){
+			req.open("GET","searchCompany.jsp?compname="+compname,true);
+			req.send();
+		}
+		else{
+			document.getElementById("company_form").style.display="none";
+			document.getElementById("search_result_div").style.display="none";
+		}
+}
+
+function displayCompanyInfo(compname,cid){
+	document.getElementById("search_result_div").style.display="none";
+	var req=new XMLHttpRequest();
+		req.onreadystatechange=function(){
+			if(req.readyState==4 && req.status==200){
+				//alert(req.responseText);
+				var res=req.responseText.split("+");
+				//alert(res[0]);
+				var company_form=document.getElementById('company_form');
+				company_form.style.display="block";
+				document.getElementById("company_name").value=compname;
+				document.getElementById("date").value=res[0];
+				//alert(res[0]+ '  '+res[1]);
+				//document.getElementById("company_time")=res[1];
+				var branch=document.getElementsByName("branch");
+				var branchopt=res[2].split(",");
+				for(j=0,i=0;i<branch.length;i++){
+					if(branch[i].value==branchopt[j]){
+						branch[i].checked=true;
+						j++;
+					}
+				}
+				document.getElementById("gpa").value=res[4];
+				var roundsopt=res[3].split(",");
+				var rounds=document.getElementById("rounds");
+				var roundsoptlen=roundsopt.length-1;
+				for(i=0;i<rounds.options.length;i++){
+					if(rounds.options[i].text==roundsoptlen){
+						rounds.selectedIndex=i;
+						break;
+					}
+				}
+				createFields();
+				for(i=0;i<roundsoptlen;i++){
+					var inputid="Round "+(i+1);
+					var inputval=document.getElementById(inputid);
+					inputval.value=roundsopt[i];
+
+				}
+
+				document.getElementById("description").value=res[5].substring(0,res[5].indexOf("<!"));
+				document.getElementById("comp_id").value=cid;
+
+			}
+
+		}
+		req.open("GET","searchCompany.jsp?displaycompany="+compname,true);
+		req.send();
+}
+function validateData(){
+	var booldate=validateDate();
+	var boolgpa=validateGPA();
+	var boolrounds=validateRounds();
+	var cid=document.getElementById("comp_id").value;
+	if(booldate && boolgpa && boolrounds){
+		//document.getElementById("company_form").submit();
+		checkCount(cid);
+	}
+	else if(booldate==false)
+		displayModal("Incorrect Date, please enter date from future");
+	else if(boolgpa==false)
+		displayModal("Incorrect GPA, please enter gpa <=10");
+	else
+		displayModal("Incorrect number of Rounds. Enter atleast 1 Round");
+	
+}
+
+function validateDate(){
+	var dateString = document.getElementById('date').value;
+ var myDate = new Date(dateString);
+ //alert(myDate);
+ 
+ var today = new Date();
+ //alert(today);
+ if ( myDate < today ) { 
+     
+     return false;
+ }
+ return true;
+}
+function validateGPA(){
+	var gpa=parseFloat(document.getElementById('gpa').value);
+	if(gpa>10)
+		return false;
+	return true;
+}
+function validateRounds(){
+   var optionfield=document.getElementById('rounds');
+   var num=optionfield.options[optionfield.selectedIndex].value;
+   if(num==0)
+	   return false;
+   return true;
+
+}
+function checkCount(cid){
+	//alert(cid);
+	var req=new XMLHttpRequest();
+	req.onreadystatechange=function(){
+		if(req.readyState==4 && req.status==200){
+			
+			var res=req.responseText;
+			res=res.substring(0,res.indexOf("<!"));
+			var str=res.split("+");
+			var stdid=str[1];
+		//alert(stdid);
+			if(stdid){
+				stdid=str[1].substring(0,str[1].lastIndexOf(","));
+			}
+			else{
+				stdid="";
+			}
+			
+			//alert(stdid.length);
+				document.getElementById("stu_id").value=stdid;
+			displayCountModal("Updating GPA will remove "+ str[0]+" student(s) from interview");
+
+		}
+
+	}
+	var gpa=document.getElementById("gpa").value;
+	req.open("POST","update_interview.jsp",true);
+	req.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	req.send("cid="+cid+"&gpa="+gpa);
+	
+}
+function displayCountModal(message){
+	document.getElementById("count_modal_text").innerHTML=message;
+	$("#count_modal").modal('show');
+	
+}
+function updateInterview(){
+	document.getElementById("company_form").submit();
+}
+
+
+</script>  
+  
+  </body>
+  </html>

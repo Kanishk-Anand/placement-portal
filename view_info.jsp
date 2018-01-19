@@ -1,37 +1,41 @@
 <%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <%@include file="connect.jsp" %>
 <html>
   <head>
-    <title> Placement Portal| Shortlisted Interviews </title>
+    <title> Placement Portal| Personal Details </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="view_info.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css">
+     <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/view_info.css">
+   
  </head>
  <body>
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">WebSiteName</a>
+        <a class="navbar-brand" href="student_company.jsp" id="webname">Be~Placed</a>
       </div>
-   <ul class="nav navbar-nav">
-     <li><a href="#"><i class="fa fa-home"></i></a></li>
+   <ul class="nav navbar-nav navbar-right">
+     <li><a href="student_company.jsp"><i class="fa fa-home"></i></a></li>
      <li><a href="student_company.jsp">Available Interviews</a></li>
-     <li ><a href="shortlisted_interviews.jsp">Shortlisted Interviews</a></li>
-     <li class="active"><a href="css/view_info.jsp">View Information </a></li>
+     <li><a href="shortlisted_interviews.jsp" >Shortlisted Interviews</a></li>
+     <li class="active"><a href="view_info.jsp" style="background-color:#4eb1ba;border-radius:5px">View Information </a></li>
+     <li><a href="logout.jsp"><i class="octicon octicon-sign-out" style="font-size:22px"></i></a></li>	
    </ul>
  </div>
 </nav>
 <div class="container">
 	<%
 		if(conn!=null){
-			String q="SELECT name,email,branch,cgpa,placed FROM student where student_id=1;";
+			String q="SELECT name,email,branch,cgpa,placed FROM student where student_id='"+session.getAttribute("student_id")+"';";
 			rs=st.executeQuery(q);
-			if(rs.next()){
+			while(rs.next()){
 		%>
 	
 	
@@ -61,19 +65,34 @@
                       </tr>
                       <tr>
                         <td>GPA</td>
-                        <td><%=rs.getString("cgpa") %></td>
+                        <%
+                        		String cgpa=rs.getString("cgpa");
+                        		if(cgpa.length()>=3)
+                        			cgpa=cgpa.substring(0,3);
+                        %>
+                        <td><%=cgpa %></td>
                       </tr>
                    
                          
                       <tr>
                         <td>Placed</td>
-                        <td><%=rs.getString("placed") %></td>
+                        <%String placed=rs.getString("placed");
+                        		if(placed.compareTo("f")==0)
+                        			placed="NO";
+                        		else
+                        			placed="YES";
+                        %>
+                        <td><%=placed %></td>
                       </tr>    
                     </tbody>
                   </table> 
                  <%
 			}
-		}     
+		}
+	if(conn!=null)
+		conn.close();
+	if(st!=null)
+		st.close();
                  %>
                 </div>
               </div>

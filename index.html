@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Placement Portal|Home</title>
+  <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+<body>
+ 
+ 
+  <div class="jumbotron" style="background-color:#252839;font-family:Garamond">
+    <h1 style="color:white;text-align:center">Placement Portal</h1>
+    <p style="margin-left:100px;color:white;text-align:center">-Kanishk Anand</p>
+  </div>
+ <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+    
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Message:</h4>
+        </div>
+        <div class="modal-body">
+          <p id="modal_text"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+ 
+  <div class="form">
+
+      <ul class="tab-group">
+        <li class="tab active"><a href="#student">Student</a></li>
+        <li class="tab"><a href="#faculty">Faculty</a></li>
+      </ul>
+
+      <div class="tab-content">
+        <div id="student">
+          <h1>Student Login:</h1>
+
+          <form action="student_login.jsp" method="post">
+
+
+
+          <div class="field-wrap">
+            <label>
+              Email Address<span class="req">*</span>
+            </label>
+            <input type="email" required autocomplete="off" name="student_email"/>
+          </div>
+
+          <div class="field-wrap">
+            <label>
+              Password<span class="req">*</span>
+            </label>
+            <input type="password"required autocomplete="off" name="student_pass"/>
+          </div>
+
+          <button type="submit" class="button button-block">Log In</button>
+
+          </form>
+
+        </div>
+
+        <div id="faculty">
+          <h1>Faculty login:</h1>
+
+          <form action="faculty_login.jsp" method="post">
+
+            <div class="field-wrap">
+            <label>
+              Email Address<span class="req">*</span>
+            </label>
+            <input type="email" required autocomplete="off" name="faculty_email"/>
+          </div>
+
+          <div class="field-wrap">
+            <label>
+              Password<span class="req">*</span>
+            </label>
+            <input type="password"required autocomplete="off" name="faculty_pass"/>
+          </div>
+
+
+
+          <button type="submit" class="button button-block">Log In</button>
+
+          </form>
+
+        </div>
+
+      </div>
+
+</div>
+
+  
+
+
+
+    <script  src="js/index.js"></script>
+	<script src="js/authenticate.js"></script>
+	
+
+
+</body>
+
+</html>

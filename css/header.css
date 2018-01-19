@@ -1,0 +1,51 @@
+body,nav{
+  background-color:#222930;
+}
+
+#webname{
+  color:#4eb1ba;
+  font-size:25px;
+}
+nav .nav>li>a{
+  color:#e2e2e2;
+  font-size: 22px;
+
+}
+.navbar .nav>li>a:hover{
+  background-color: #ba574e;
+  border-radius: 5px;
+  color:white;
+}
+
+.navbar{
+  border-bottom:5px solid;
+  border-bottom-color: #4eb1ba;
+}
+.navbar .nav>li>a{
+  padding-left:20px;
+  padding-right:20px;
+}
+.heading{
+  font-family: Georgia;
+  color: #4eb1ba;
+}
+#logout_icon{
+	font-size:22px;
+}
+th{
+	color: #4eba8d;
+	font-size: 20px;
+}
+tr{
+	color:#e2e2e2;
+}
+#add_company_div{
+	width:80%;
+  text-align:center;
+  padding:20px;
+  padding-left:60px;
+}
+.astericks{
+  color:#ba574e;
+  font-size:25px;
+}

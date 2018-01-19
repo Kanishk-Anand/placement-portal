@@ -3,57 +3,87 @@
     <title> Placement Portal| Interview </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
- </head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css">
+    
+    <link rel="stylesheet" href="css/interview.css">
+</head>
  <body>
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">WebSiteName</a>
+        <a class="navbar-brand" href="interview.html" id="webname">Be~Placed</a>
       </div>
-   <ul class="nav navbar-nav">
-     <li><a href="#"><i class="fa fa-home"></i></a></li>
-     <li class="active"><a href="#">Companies</a></li>
-     <li><a href="#">Placed Students</a></li>
+   <ul class="nav navbar-nav navbar-right">
+     <li><a href="interview.html"><i class="fa fa-home" ></i></a></li>
+     <li class="active"><a href="interview.html" style="background-color:#4eb1ba;border-radius:5px">Companies</a></li>
+     <li><a href="student_status.jsp">Placement Status</a></li>
+     <li><a href="logout.jsp"><i class="octicon octicon-sign-out" style="font-size:21px"></i></a></li>	
    </ul>
  </div>
 </nav>
-<div class="container-fluid" id="add_company_div">
-  <div class="row">
-    <div class="col-xs-offset-4 col-xs-3">
-      <a href="#" class="btn btn-sq-lg btn-primary active"> <i class="fa fa-plus fa-5x"></i><br> New Company <br> Interview </a>
-    </div>
-    <div class="col-xs-4">
-      <a href="#modify_company_div" class="btn btn-sq-lg btn-danger"> <i class="fa fa-bolt fa-5x"></i><br> Modify   <br> Interview<br> </a>
+
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Message:</h4>
+        </div>
+        <div class="modal-body">
+          <p id="modal_text"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
     </div>
   </div>
 
+
+
+
+<div class="container-fluid" id="add_company_div">
   <div class="row">
-    <h1> Schedule Interview </h1>
-    <form class="form-horizontal" action="addcompany.jsp">
+  	<div class="btn-group btn-group-justified">
+  		<a href="interview.html" class="btn btn-success active" id="add_interview_btn">Add Interview</a>
+  		<a href="modify_interview.html" class="btn btn-primary" id="modify_interview_btn">Modify Interview</a>
+  		<a href="delete_interview.jsp" class="btn btn-danger" id="delete_interview_btn">Delete Interview</a>
+  		<a href="interview_report.jsp" class="btn btn-warning" id="view_report_btn">View Report</a>
+	</div> 
+  </div>
+
+  <div class="row">
+    <h1 class="heading"> Schedule Interview </h1>
+   <form class="form-horizontal" action="addcompany.jsp?update=2" id="company_form" method="post">
     <div class="form-group" id="sourcediv">
-      <label class="control-label col-sm-2" for="company_name">Company Name:<span class="astericks">*</span></label>
+      <label class="control-label col-sm-3" for="company_name">Company Name <span class="astericks">*</span></label>
       <div class="col-sm-6">
         <input type="text" class="form-control" id="company_name" placeholder="Enter Comany Name" name="company_name" required>
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2" for="date"> Date <span class="astericks">*</span></label>
+      <label class="control-label col-sm-3" for="date"> Date <span class="astericks">*</span></label>
       <div class="col-sm-6">
         <input type="date" class="form-control" id="date" placeholder="" name="date" required>
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2" for="company_time">Time <span class="astericks">*</span></label>
+      <label class="control-label col-sm-3" for="company_time">Time <span class="astericks">*</span></label>
       <div class="col-sm-6">
         <input type="time" class="form-control" id="company_time" placeholder="" name="company_time">
       </div>
     </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2">Branches Eligible: </label>
+    <div class="form-group" id="branch">
+      <label class="control-label col-sm-3">Branches Eligible </label>
+      <div class="col-sm-5 text-left">
       <label class="checkbox-inline">
         <input type="checkbox" value="CSE" name="branch" checked>CSE
       </label>
@@ -72,17 +102,18 @@
       <label class="checkbox-inline">
         <input type="checkbox" value="CIVIL" name="branch">CIVIL
       </label>
+    </div>
 
 
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2" for="gpa">Minimum GPA:</label>
+      <label class="control-label col-sm-3" for="gpa">Minimum GPA </label>
       <div class="col-sm-6">
         <input type="text" class="form-control" id="gpa" placeholder="Enter Minimum GPA" name="gpa">
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-2" for="rounds">Number of Rounds:<span class="astericks">*</span></label>
+      <label class="control-label col-sm-3" for="rounds">Number of Rounds <span class="astericks">*</span></label>
       <div class="col-sm-6">
         <select class="form-control" id="rounds" name="rounds" onchange="createFields();">
             <option value="0" >0</option>
@@ -98,99 +129,90 @@
 
     </div>
 
-
+	<div class="form-group">
+       <label class="control-label col-sm-3" for="description">Description</label>
+       <div class="col-sm-6">
+           <textarea class="form-control" rows="8" id="description" name="description"></textarea>
+                  
+      	</div>
+      </div>
 
 
     <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-default">Submit</button>
+      <div class="col-sm-offset-2 col-sm-5">
+        <button type="button" class="btn btn-default" onclick="validateData()">Submit</button>
       </div>
     </div>
   </form>
- 
-  
+
+
 </div>
 </div>
 
+<script src="js/handle.js"></script>
 
-<div class="container" id="modify_company_div">
-  
-  <div class="row">
-    <h1> Modify Interview </h1>
-   	<div class="form-group">
-      <label class="control-label col-sm-2" for="search_company">Enter Company Name:</label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control" id="search_company" placeholder="Find company's interview here" name="company_name" onkeyup="showResult(this.value)">
-        
-      </div>
-    </div>
-   	<div id="search_result_div" class="col-sm-offset-2 col-sm-4"></div>
-    	
-	</div>
-</div>
 <script>
-    function createFields(){
-      var fielddiv= document.getElementById('input_fields');
-      var optionfield=document.getElementById('rounds');
-      var num=optionfield.options[optionfield.selectedIndex].value;
-      fielddiv.style.display="none";
-      while (fielddiv.firstChild) {
+	var urlstr=window.location.href;
+	var url=new URL(urlstr);
+	var success=url.searchParams.get("success");
+	
+	if(success==2){
+		displayModal("Successfully Added");
 
-        fielddiv.removeChild(fielddiv.firstChild);
-
-      }
-      var txt='';
-      for(var i=0;i<num;i++){
-
-        var sourcediv=document.getElementById('sourcediv');
-        var clonediv=sourcediv.cloneNode(true);
-        clonediv.id='';
-        var cnode=clonediv.childNodes;
-        for(j=0;j<cnode.length;j++){
-          txt="Round "+(i+1);
-          cnode[1].innerHTML=txt;
-          cnode[1].setAttribute('for',txt)
-          var nestdiv=cnode[3];
-          var newinput=nestdiv.childNodes;
-          newinput[1].placeholder="Round Name / Description";
-          newinput[1].value='';
-          newinput[1].id=txt;
-          newinput[1].setAttribute('name',txt);
-        }
-        fielddiv.appendChild(clonediv);
-      }
-      fielddiv.style.display="block";
 	}
-    
-    function showResult(compname){
-    	var req=new XMLHttpRequest();
-  		req.onreadystatechange=function(){
-  			if(req.readyState==4 && req.status==200){
-  				//alert(req.responseText);
-  					
-  			}
-  			
-  		}
-  		req.open("GET","searchCompany.jsp?compname="+compname,true);
-  		req.send();
-    }
-    
-    function displayCompanyInfo(compname){
-    	var req=new XMLHttpRequest();
-  		req.onreadystatechange=function(){
-  			if(req.readyState==4 && req.status==200){
-  				//alert(req.responseText);
-  				document.getElementById("search_result_div").innerHTML=req.responseText+"<br>";
-  					
-  			}
-  			
-  		}
-  		req.open("GET","searchCompany.jsp?displaycompany="+compname,true);
-  		req.send();
-    }
-    
-    
-    
+	else if(success==0){
+		displayModal("Error in updating. Kindly try again later.");
+	}
+	else{
+		console.log("Parameter not set");
+	}
+	
+
+	function validateData(){
+		var booldate=validateDate();
+		var boolgpa=validateGPA();
+		var boolrounds=validateRounds();
+		if(booldate && boolgpa && boolrounds)
+			document.getElementById("company_form").submit();
+		else if(booldate==false)
+			displayModal("Incorrect Date, please enter date from future");
+		else if(boolgpa==false)
+			displayModal("Incorrect GPA, please enter gpa <=10");
+		else
+			displayModal("Incorrect number of Rounds. Enter atleast 1 Round");
+		
+	}
+
+	function validateDate(){
+		var dateString = document.getElementById('date').value;
+     var myDate = new Date(dateString);
+     //alert(myDate);
+     
+     var today = new Date();
+     //alert(today);
+     if ( myDate < today ) { 
+         
+         return false;
+     }
+     return true;
+	}
+	function validateGPA(){
+		var gpa=parseFloat(document.getElementById('gpa').value);
+		if(gpa>10)
+			return false;
+		return true;
+	}
+function validateRounds(){
+	   var optionfield=document.getElementById('rounds');
+	   var num=optionfield.options[optionfield.selectedIndex].value;
+	   if(num==0)
+		   return false;
+	   return true;
+	
+}
+ 
+
+
   </script>
 
 </body>

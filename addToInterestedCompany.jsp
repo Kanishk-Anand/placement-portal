@@ -7,50 +7,49 @@
 if(request.getParameter("add_id")!=null){
 	String id= request.getParameter("add_id");
 if(conn!=null){
-	String q="SELECT interested_companies FROM student WHERE student_id=1 ;";
-	rs=st.executeQuery(q);
-	String com="";
-	while(rs.next()){
-		com=rs.getString("interested_companies");
-		com=com+id;
-	}
-	q="UPDATE student SET interested_companies=? WHERE student_id=1;";
+	
+	String sid=(String)session.getAttribute("student_id");
+	int student_id=Integer.parseInt(sid);
+	String q="INSERT INTO shortlist (company_id,student_id) VALUES (?,?);";
 	ps=conn.prepareStatement(q);
-	ps.setString(1,com);
+	ps.setInt(1,Integer.parseInt(id));
+	ps.setInt(2,student_id);
 	int i=ps.executeUpdate();
 	if(i>0){
-		System.out.println("Updated successfully");
+		//System.out.println("Updated successfully");
 		pw.write("OK");
 	}
 	else
-		System.out.println("Error");
+		pw.write("Error");
+	
 }
 }
 
 if(request.getParameter("remove_id")!=null){
 	String id= request.getParameter("remove_id");
-	System.out.println(id);
+	int company_id=Integer.parseInt(id);
+	//System.out.println(id);
 if(conn!=null){
-	String q="SELECT interested_companies FROM student WHERE student_id=1 ;";
-	rs=st.executeQuery(q);
-	String com="";
-	while(rs.next()){
-		com=rs.getString("interested_companies");
-		com=com.replace(id,"");
-	}
-	q="UPDATE student SET interested_companies=? WHERE student_id=1;";
-	ps=conn.prepareStatement(q);
-	ps.setString(1,com);
-	int i=ps.executeUpdate();
+	String sid=(String)session.getAttribute("student_id");
+	int student_id=Integer.parseInt(sid);
+	String q="DELETE FROM shortlist WHERE student_id='"+student_id+"' AND company_id='"+company_id+"';";
+	st=conn.createStatement();
+	int i=st.executeUpdate(q);
+	
 	if(i>0){
-		System.out.println("Updated successfully");
+		//System.out.println("Deleted successfully");
 		pw.print("OK");
 	}
 	else
-		System.out.println("Error");
+		pw.print("Error");
 }
 }
 
+
+if(conn!=null)
+	conn.close();
+if(st!=null)
+	st.close();
 
 
  %>
